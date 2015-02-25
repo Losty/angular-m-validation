@@ -1,0 +1,26 @@
+{
+  "name": "angular-m-validation",
+  "version": "1.0.0",
+  "description": "Client-side model validation for AngularJS",
+  "authors": [
+    "Alexandr.Dascal <Alexandr.Dascal@gmail.com>"
+  ],
+  "main": "dist/angular-m-validation.js",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "validation",
+    "angular validation",
+    "validator",
+    "model validation",
+    "angular model validation",
+    "client-side"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}

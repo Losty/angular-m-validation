@@ -1,0 +1,27 @@
+{
+  "name": "angular-m-validation",
+  "version": "1.0.0",
+  "description": "Client-side model validation for AngularJS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Losty/angular-m-validation"
+  },
+  "author": {
+    "name": "Alexandr Dascal",
+    "email": "Alexandr.Dascal@gmail.com"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "validation",
+    "angular validation",
+    "validator",
+    "model validation",
+    "angular model validation",
+    "client-side"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}
