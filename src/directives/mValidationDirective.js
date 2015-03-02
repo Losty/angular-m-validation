@@ -9,33 +9,74 @@
         .directive('mValidation', ['$injector', function ($injector) {
             var $scope,
                 mValidationProvider,
-                schemaElements = [],
-                formElements = [];
+                $this = this;
 
-            var setup = function(injector) {
+            var setup = function (injector) {
                 $scope = injector.get('$scope');
                 mValidationProvider = injector.get('mValidationProvider');
             };
 
+            $this.parseSchema = function (schemaName) {
+                var schema = $scope[schemaName] || mValidationProvider.getSchema(schemaName);
+
+                if (!schema) {
+                    throw new Error('Schema not found');
+                }
+                return schema;
+            };
+
+            $this.parseSchemaElements = function (schema, validateOn) {
+                var schemaElements = [];
+                for (var prop in schema) {
+                    if (schema.hasOwnProperty(prop)) {
+                        var schemaGlobals = schema.globals || schema.__globals;
+
+                        var schemaElement = angular.copy(schema[prop]);
+
+                        schemaElement.validateOn = schemaElement.validateOn ||
+                                                    schema.validateOn ||
+                                                    schemaGlobals.validateOn ||
+                                                    validateOn;
+
+                        if (validateOn === 'change') {
+                            // remove old watcher
+                            if (schemaElement.watcher) {
+                                schemaElement.watcher();
+                            }
+
+                            var schemaElementName = schemaElement.name || prop;
+                            schemaElement.watcher = $scope.$watch(schemaElementName, function() {
+                                // validate
+                            });
+                        }
+
+                        schemaElements.push(schemaElement);
+                    }
+                }
+
+                return schemaElements;
+            };
+
             return {
-                restrict: 'A',
-                require: '^ngForm',
-                compile: function(form, formAttrs) {
+                restrict: 'AE',
+                compile: function (element, attrs) {
                     setup($injector);
 
-                    var schemaName = formAttrs.schema;
-
-                    var schema = $scope[schemaName] || mValidationProvider.getSchema(schemaName);
-
-                    if (!schema) {
-                        throw new Error('Schema not found');
+                    if (angular.isUndefined(attrs.schema)) {
+                        throw new Error('Schema is not defined');
                     }
 
-                    var schemaGlobals = schema.globals || {};
-                    var schemaProperties = schema.properties || {};
+                    var schema = $this.parseSchema(attrs.schema);
+                    var schemaElements = $this.parseSchemaElements(schema, attrs.validateOn);
 
-                    var formValidateOn = formAttrs.validateOn || schemaGlobals.validateOn;
-                    var formElements = form.querySelectorAll('input, select, textarea');
+                    attrs.$observe('schema', function (schemaName) {
+                        var schema = $this.parseSchema(schemaName);
+                        var schemaElements = $this.parseSchemaElements(schema, attrs.validateOn);
+                    });
+
+                    attrs.$observe('validateOn', function (validateOn) {
+                        var schemaElements = $this.parseSchemaElements(schema, validateOn);
+                    });
                 }
             };
         }]);
