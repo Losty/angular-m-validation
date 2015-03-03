@@ -1,6 +1,6 @@
 {
   "name": "angular-m-validation",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Client-side model validation for AngularJS",
   "repository": {
     "type": "git",
