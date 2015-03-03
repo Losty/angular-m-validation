@@ -22,8 +22,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "chai": "^2.1.0",
     "grunt": "^0.4.5",
-    "jasmine": "^2.2.1",
-    "karma": "^0.12.31"
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-mocha": "^0.1.10",
+    "mocha": "^2.1.0"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha -w"
   }
 }

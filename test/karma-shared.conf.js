@@ -6,7 +6,7 @@
 
 module.exports = function() {
     return {
-        basePath: '',
+        basePath: '../',
         frameworks: ['jasmine'],
         reporters: ['progress'],
         browsers: ['Chrome'],
