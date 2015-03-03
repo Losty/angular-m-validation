@@ -22,6 +22,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "jasmine": "^2.2.1",
+    "karma": "^0.12.31"
   }
 }
